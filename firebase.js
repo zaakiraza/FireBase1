@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
+import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCU_BU_2LaL4NuaF5u6qrKiu5wFN66BVik",
@@ -15,39 +15,81 @@ const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-export async function signUp(details) {
+export async function signUp(userDetails, loaderImg) {
     try {
-        const { firstName, email, country, password } = details;
-        const userCredentials = await createUserWithEmailAndPassword(auth, email, password);
-        alert("User Welcome successfully registered");
-        const detailsWithoutPassword = { firstName, email, country };
-        const docRef = await addDoc(collection(db, "users"), detailsWithoutPassword);
-        alert("User ka data store mai gaya");
-        setTimeout(() => {
-            location.href = '/index.html';
-        }, 3000)
+        let { name, email, description, imgURL, password } = userDetails;
+        loaderImg.style.display = 'flex';
+        let userCredentials = await createUserWithEmailAndPassword(auth, email, password);
+        let { password: mypassword, ...detalsWithoutPassword } = userDetails;
+        await setDoc(doc(db, "users", userCredentials?.user?.uid), detalsWithoutPassword);
+        loaderImg.style.display = 'none';
+        alert("Registerd Successfully");
+        location.href = '../home/home.html';
     }
     catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
-        console.log(errorCode)
-        console.log(errorMessage);
+        alert(`You Can't Sign In\n${errorMessage}`);
+        window.location.reload();
     }
 }
 
-export async function login(details) {
+export async function login(loginDetals, loaderImg) {
     try {
-        const { email, password } = details;
-        const userCredential = signInWithEmailAndPassword(auth, email, password)
-        const user = userCredential.user;
-        alert("Login successfully");
-        setTimeout(() => {
-            location.href = '/index.html';
-        }, 3000);
+        const { email, password } = loginDetals;
+        loaderImg.style.display = 'flex';
+        const res = await signInWithEmailAndPassword(auth, email, password)
+        loaderImg.style.display = 'none';
+        location.href = '../home/home.html';
     }
     catch (error) {
         const errorCode = error.code;
         const errorMessage = error.message;
-        alert("Invalid userName or password");
+        alert(errorMessage);
+        window.location.reload();
     }
+}
+
+export function stateObserver() {
+    return new Promise(function (resolve) {
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                const uid = user.uid;
+                resolve(uid);
+            } else {
+                alert("No User found");
+                location.href = '../login/login.html';
+            }
+        });
+    })
+}
+
+export async function getSingleData(uid) {
+    const docRef = doc(db, "users", uid);
+    const docSnap = await getDoc(docRef);
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log("No such document!");
+        location.href = '../login/login.html';
+    }
+}
+
+export async function editDetails(obj, uid) {
+    try {
+        await setDoc(doc(db, "users", uid), obj);
+        alert("Updated");
+        window.location.reload();
+    }
+    catch (error) {
+        alert(error);
+    }
+}
+
+export async function logout() {
+    try {
+        await signOut(auth);
+        console.log("==>> signout successfully");
+        window.location.href = "../login/login.html";
+    } catch (error) { }
 }

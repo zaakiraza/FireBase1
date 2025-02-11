@@ -4,23 +4,35 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="login.css">
+    <link rel="stylesheet" href="../signup/index.css">
     <title>Login</title>
     <style>
-        
+
     </style>
 </head>
 
 <body>
+
+    <div class="loaderImg">
+        <i class="fa-solid fa-spinner"></i>
+    </div>
+
+    <div id="themeSwitcher">
+        <i class="fa-solid fa-moon"></i>
+    </div>
+
     <div class="form-container">
-        <h2>Login</h2>
+        <h2>Log In</h2>
         <form id="loginForm">
             <input id="loginEmail" type="email" placeholder="E-mail" required><br><br>
             <input id="loginPassword" type="password" placeholder="Password" required><br><br>
-            <button id="SubmitlogIn">Submit</button>
+            <button id="loginSubmit">Log In</button>
+            
         </form>
-        <a href="../signup/signup.html">Don't have an account? Sign up here</a>
+        <a href="../signup/index.html">Already have an account? Login here</a>
     </div>
+
+    <script src="https://kit.fontawesome.com/c681fd371f.js" crossorigin="anonymous"></script>
     <script src="login.js" type="module"></script>
 </body>
 

@@ -1,0 +1,93 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+}
+
+#editProfileUpModal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.modal-content {
+    background-color: white;
+    margin: 5% auto;
+    padding: 20px;
+    border-radius: 8px;
+    width: 30%;
+    text-align: center;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.close-btn {
+    color: #aaa;
+    font-size: 28px;
+    font-weight: bold;
+    position: absolute;
+    top: 10px;
+    right: 15px;
+}
+
+.close-btn:hover,
+.close-btn:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+
+input,
+#signUpForm button {
+    width: 100%;
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    box-sizing: border-box;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+#signUpForm button {
+    color: white;
+    border: none;
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: bold;
+}
+
+#signUpForm button:hover {
+    transform: translateY(-2px);
+}
+
+/* Upload Icon Styling */
+.upload-icon {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    background-color: white;
+    color: #757575;
+    border-radius: 5px;
+    font-size: 14px;
+    margin-top: 10px;
+    width: 100%;
+    border: 1px solid #7575754d;
+    text-align: left;
+}
+
+.upload-icon i {
+    margin-right: 5px;
+}

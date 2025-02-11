@@ -1,0 +1,156 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Light Theme Styles */
+body {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    gap: 25px;
+    align-items: center;
+    height: 100vh;
+    background-color: #f9f9f9;
+    color: #000;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+h2 {
+    font-weight: 600;
+    font-size: 40px;
+}
+
+.form-container {
+    background: #ffffff;
+    padding: 30px;
+    border-radius: 12px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    width: 30%;
+    text-align: center;
+    transition: background-color 0.3s ease;
+}
+
+input,
+input,
+.upload-icon {
+    width: 100%;
+    padding: 15px 0px 15px 11px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 14px;
+    background: #ffffff;
+    color: #757575;
+    transition: background-color 0.3s ease, color 0.3s ease;
+    margin: 10px 0;
+}
+
+form button {
+    width: 100%;
+    padding: 12px;
+    background: #121212;
+    color: #ffffff;
+    font-size: 16px;
+    font-weight: 500;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: all 0.3s ease, transform 0.2s;
+    border: 1px solid #121212;
+}
+
+form button:hover {
+    background: white;
+    color: #121212;
+    transform: translateY(-2px);
+}
+
+a {
+    display: block;
+    margin-top: 12px;
+    color: #007BFF;
+    text-decoration: none;
+    font-size: 14px;
+    transition: color 0.3s ease;
+}
+
+a:hover {
+    text-decoration: underline;
+}
+
+#themeSwitcher i {
+    font-size: 25px;
+    cursor: pointer;
+    padding: 7px 10px;
+    background-color: black;
+    color: white;
+    border-radius: 25px;
+}
+
+.upload-icon {
+    display: inline-block;
+    text-align: left;
+}
+
+/* Hide default file input */
+input[type="file"] {
+    display: none;
+}
+
+
+/* Theme Toggle Button */
+.theme-toggle button {
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-size: 24px;
+    color: #007BFF;
+    transition: color 0.3s ease;
+}
+
+.theme-toggle button:hover {
+    color: #0056b3;
+}
+
+body.dark .theme-toggle button {
+    color: #FFD700;
+}
+
+/* Light Theme */
+body {
+    background-color: #f9f9f9;
+    color: #000;
+}
+
+body.dark {
+    background-color: #121212;
+}
+
+/* Loader img */
+
+.loaderImg {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #80808078;
+}
+
+.loaderImg i {
+    font-size: 60px;
+    animation: loaderCircular 1s infinite;
+}
+
+@keyframes loaderCircular {
+    from{
+        transform: rotate(0deg);
+    }
+    to{
+        transform: rotate(360deg);
+    }
+}
