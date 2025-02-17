@@ -48,6 +48,7 @@ body {
 }
 
 input,
+textarea,
 #signUpForm button {
     width: 100%;
     padding: 10px;
@@ -55,6 +56,7 @@ input,
     border-radius: 5px;
     border: 1px solid #ddd;
     box-sizing: border-box;
+    color: #7d7979;
 }
 
 input[type="file"] {
@@ -90,4 +92,45 @@ input[type="file"] {
 
 .upload-icon i {
     margin-right: 5px;
+}
+
+.card {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+}
+
+.allPosts {
+    display: flex;
+    flex-direction: column;
+    gap: 50px;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    top: 0;
+    left: 22%;
+}
+
+.posts_Here {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.posts_Here img {
+    width: 800px;
+    height: 500px;
+}
+
+.title {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.title img {
+    width: 50px;
+    height: 50px;
+    border-radius: 50px;
 }
