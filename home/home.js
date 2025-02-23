@@ -35,7 +35,6 @@ editProfileBtn.onclick = async function () {
     editName.value = name;
     editEmail.value = email;
     editDes.value = description;
-    editImg.value = imgURL;
 }
 
 // Close Modal when clicking on "X"
@@ -55,13 +54,37 @@ let userDetails;
 
 editBtn.onclick = function (e) {
     e.preventDefault();
-    console.log(emailUserFeild.value)
-    editDetails({
-        name: editName.value,
-        email: editEmail.value,
-        imgURL: editImg.value || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
-        description: editDes.value || ""
-    }, uid);
+    async function uploadImage() {
+        const fileInput = editImg.files[0];
+
+        if (!fileInput) {
+            alert("Please select an image first.");
+            return;
+        }
+
+        const formData = new FormData();
+        formData.append('file', fileInput);
+        formData.append('upload_preset', 'fireBase1');
+
+        try {
+            const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            editDetails({
+                name: editName.value,
+                email: editEmail.value,
+                imgURL: data.secure_url,
+                description: editDes.value || ""
+            }, uid);
+
+        } catch (error) {
+            console.error("Error uploading image:", error);
+        }
+    }
+    uploadImage();
 }
 
 homelogoutBtn.onclick = function (e) {

@@ -59,9 +59,9 @@ textarea,
     color: #7d7979;
 }
 
-input[type="file"] {
+/* input[type="file"] {
     display: none;
-}
+} */
 
 #signUpForm button {
     color: white;

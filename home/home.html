@@ -13,9 +13,7 @@
 <body>
 
     <div class="card" style="width: 18rem;">
-        <img class="card-img-top" id="img"
-            src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
-            alt="Card image cap">
+        <img class="card-img-top" id="img" src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg" alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title" id="name">Name</h5>
             <p id="email"></p>
@@ -25,7 +23,7 @@
         </div>
     </div>
 
-    <div class="allPosts">
+    <div class="allPosts" id="AllPosts">
         <div class="posts_Here">
             <img src="https://www.istockphoto.com/resources/images/PhotoFTLP/1040315976.jpg" alt="Some Image">
             <div class="Image_Des">
@@ -61,12 +59,9 @@
             <form id="signUpForm">
                 <input id="editName" type="text" placeholder="Name" required>
                 <input id="editEmail" type="email" placeholder="E-Mail" required>
-                <input id="editImg" type="text" placeholder="Image URL">
+                <label for="editImg" class="upload-icon"> <i class="fa-solid fa-upload"></i> Upload Image </label>
+                <input id="editImg" type="file" required hidden>
                 <textarea id="editDes" cols="47" rows="5">About yourself</textarea>
-                <!-- <label for="SignUpImg" class="upload-icon">
-                    <i class="fa-solid fa-upload"></i> Upload Image
-                </label> -->
-                <!-- <input id="SignUpImg" type="file" required hidden> -->
                 <button id="editBtn" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
