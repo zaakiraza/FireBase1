@@ -1,4 +1,4 @@
-import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder, postInDB, showAllPost } from "../firebase.js";
+import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder, postInDB, showAllPost, showOnlyPosts } from "../firebase.js";
 
 // Get modal and buttons
 const editProfileBtn = document.getElementById("editProfileBtn");
@@ -20,7 +20,9 @@ let postText = document.getElementById('postText');
 let postImg = document.getElementById('postImg');
 let postBtn = document.getElementById('postBtn');
 let allPosts = document.getElementById('AllPosts');
-const loaderImg = document.querySelector('.loaderImg');
+let loaderImg = document.querySelector('.loaderImg');
+let Allpostsbtn = document.getElementById('Allpostsbtn');
+let yourPostbtn = document.getElementById('yourPostbtn');
 let uid;
 let userDetails;
 
@@ -98,30 +100,29 @@ homelogoutBtn.onclick = function (e) {
 }
 
 postBtn.onclick = () => {
+    if (postText.value == "") {
+        alert("Write some text to post");
+        return;
+    }
     async function uploadImage() {
         const fileInput = postImg.files[0] || "";
         if (!fileInput) {
             let { name, email, imgURL } = userDetails;
             postInDB({
                 text: postText.value,
-                img: "",
                 user: {
                     userName: name,
                     userEmail: email,
-                    userProfilePic: imgURL,
+                    userProfilePic: imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
                     uerid: uid
                 }
-            });
+            }, loaderImg);
             return;
         }
-        // if (!fileInput) {
-        //     fileInput = "";
-        // }
-
+        loaderImg.display = "flex";
         const formData = new FormData();
         formData.append('file', fileInput);
         formData.append('upload_preset', 'fireBase1');
-
         try {
             const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
                 method: 'POST',
@@ -129,7 +130,18 @@ postBtn.onclick = () => {
             });
 
             const data = await response.json();
+            loaderImg.display = "none";
             let { name, email, imgURL } = userDetails;
+            postInDB({
+                text: postText.value,
+                img: data.secure_url,
+                user: {
+                    userName: name,
+                    userEmail: email,
+                    userProfilePic: imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
+                    uerid: uid
+                }
+            }, loaderImg);
 
         } catch (error) {
             alert("Post not upload");
@@ -137,4 +149,14 @@ postBtn.onclick = () => {
         }
     }
     uploadImage();
+}
+
+Allpostsbtn.onclick = async () => {
+    let postData = await showAllPost();
+    allPosts.innerHTML = postData;
+}
+
+yourPostbtn.onclick = async () => {
+    let postFilterData = await showOnlyPosts(uid);
+    allPosts.innerHTML = postFilterData;
 }

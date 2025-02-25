@@ -198,3 +198,32 @@ label i {
     flex-direction: column;
     gap: 0;
 }
+
+/* Loader img */
+
+.loaderImg {
+    position: fixed;
+    top: 0;
+    width: 100%;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: #80808078;
+    z-index: 3;
+}
+
+.loaderImg i {
+    font-size: 60px;
+    animation: loaderCircular 1s infinite;
+}
+
+@keyframes loaderCircular {
+    from {
+        transform: rotate(0deg);
+    }
+
+    to {
+        transform: rotate(360deg);
+    }
+}

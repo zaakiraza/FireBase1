@@ -105,7 +105,8 @@ export async function documentShowingOnPlaceholder(uid) {
     }
 }
 
-export async function postInDB(postDetails) {
+export async function postInDB(postDetails, loaderImg) {
+    loaderImg.style.display = "flex";
     const docRef = await addDoc(collection(db, "posts"), postDetails);
     alert("posted");
     window.location.reload();
@@ -114,25 +115,88 @@ export async function postInDB(postDetails) {
 export async function showAllPost() {
     // const q = query(collection(db, "posts"), where("capital", "==", true));
     const q = query(collection(db, "posts"));
-    let arr=[];
+    let arr = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        arr.push(`
-            <div class="posts_Here">
-                <div class="Image_Des">
-                    <div class="title">
-                        <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
-                        <div>
-                            <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
-                            <p>${doc.data()?.user?.userEmail}</p>
+        if (doc.data()?.img) {
+            arr.push(`
+                <div class="posts_Here">
+                    <div class="Image_Des">
+                        <div class="title">
+                            <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
+                            <div>
+                                <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
+                                <p>${doc.data()?.user?.userEmail}</p>
+                            </div>
                         </div>
+                        <hr>
+                        <p class="post_text">${doc.data()?.text}</p>
                     </div>
-                    <hr>
-                    <p class="post_text">${doc.data()?.text}</p>
-                </div>
-                <img src="${doc.data()?.img}" alt="Some Image">
-            </div>`)
+                    <img src="${doc.data()?.img}" alt="Some Image">
+                </div>`)
+        }
+        else {
+            arr.push(`
+                <div class="posts_Here">
+                    <div class="Image_Des">
+                        <div class="title">
+                            <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
+                            <div>
+                                <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
+                                <p>${doc.data()?.user?.userEmail}</p>
+                            </div>
+                        </div>
+                        <hr>
+                        <p class="post_text">${doc.data()?.text}</p>
+                    </div>
+                </div>`)
+        }
     });
-    arr=arr.join('')
+    arr = arr.join('')
+    return arr;
+}
+
+export async function showOnlyPosts(uid) {
+    const q = query(collection(db, "posts"));
+    let arr = [];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        if (doc.data()?.user?.uerid == uid) {
+            if (doc.data()?.img) {
+                arr.push(`
+                    <div class="posts_Here">
+                        <div class="Image_Des">
+                            <div class="title">
+                                <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
+                                <div>
+                                    <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
+                                    <p>${doc.data()?.user?.userEmail}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="post_text">${doc.data()?.text}</p>
+                        </div>
+                        <img src="${doc.data()?.img}" alt="Some Image">
+                    </div>`)
+            }
+            else {
+                arr.push(`
+                    <div class="posts_Here">
+                        <div class="Image_Des">
+                            <div class="title">
+                                <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
+                                <div>
+                                    <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
+                                    <p>${doc.data()?.user?.userEmail}</p>
+                                </div>
+                            </div>
+                            <hr>
+                            <p class="post_text">${doc.data()?.text}</p>
+                        </div>
+                    </div>`)
+            }
+        }
+    });
+    arr = arr.join('')
     return arr;
 }
