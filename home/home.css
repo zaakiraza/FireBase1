@@ -7,7 +7,7 @@
 body {
     display: flex;
     justify-content: center;
-    align-items: center;
+    align-items: baseline;
     height: 100vh;
 }
 
@@ -59,10 +59,6 @@ textarea,
     color: #7d7979;
 }
 
-/* input[type="file"] {
-    display: none;
-} */
-
 #signUpForm button {
     color: white;
     border: none;
@@ -107,19 +103,26 @@ textarea,
     gap: 50px;
     justify-content: center;
     align-items: center;
-    position: absolute;
-    top: 0;
-    left: 22%;
+    margin-bottom: 30px;
 }
 
 .posts_Here {
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    border: 1px solid black;
+    width: 100%;
+}
+
+.Image_Des {
+    padding: 15px;
+}
+
+.post_text {
+    padding-top: 15px;
 }
 
 .posts_Here img {
-    width: 800px;
+    width: 100%;
     height: 500px;
 }
 
@@ -129,8 +132,69 @@ textarea,
     gap: 10px;
 }
 
-.title img {
+.title img,
+.inputPost img {
     width: 50px;
     height: 50px;
     border-radius: 50px;
+}
+
+.postings {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    position: absolute;
+    left: 24%;
+    top: 5%;
+    width: 65%;
+}
+
+.inputsInside {
+    width: 73%;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
+
+.inputPost {
+    display: flex;
+    align-items: flex-start;
+    gap: 20px;
+}
+
+
+.inputPost input {
+    width: 100%;
+    outline: none;
+    margin: 0;
+}
+
+.inputPost button {
+    padding: 10px 30px;
+}
+
+label {
+    border: 1px solid gainsboro;
+    padding: 10px 8px;
+    color: gray;
+}
+
+label i {
+    padding-right: 5px;
+}
+
+.optionsFilter {
+    margin: 0 auto;
+}
+
+.title div h3,
+.title div p {
+    margin: 0;
+    padding: 0;
+}
+
+.title div {
+    display: flex;
+    flex-direction: column;
+    gap: 0;
 }

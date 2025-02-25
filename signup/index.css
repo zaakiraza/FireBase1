@@ -5,6 +5,12 @@
 }
 
 /* Light Theme Styles */
+
+#themeSwitcher {
+    position: absolute;
+    top: 5px;
+}
+
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     display: flex;
@@ -18,7 +24,8 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-h2 {
+.form-container h2 {
+    padding-top: 25px;
     font-weight: 600;
     font-size: 40px;
 }
@@ -134,7 +141,7 @@ body.dark {
     position: absolute;
     top: 0;
     width: 100%;
-    height: 100vh;
+    height: 111vh;
     display: none;
     justify-content: center;
     align-items: center;
@@ -147,10 +154,11 @@ body.dark {
 }
 
 @keyframes loaderCircular {
-    from{
+    from {
         transform: rotate(0deg);
     }
-    to{
+
+    to {
         transform: rotate(360deg);
     }
 }

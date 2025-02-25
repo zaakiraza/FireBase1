@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, getDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDoc, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCU_BU_2LaL4NuaF5u6qrKiu5wFN66BVik",
@@ -101,6 +101,38 @@ export async function documentShowingOnPlaceholder(uid) {
     if (docSnap.exists()) {
         return docSnap.data();
     } else {
-        return("No such document!");
+        return ("No such document!");
     }
+}
+
+export async function postInDB(postDetails) {
+    const docRef = await addDoc(collection(db, "posts"), postDetails);
+    alert("posted");
+    window.location.reload();
+}
+
+export async function showAllPost() {
+    // const q = query(collection(db, "posts"), where("capital", "==", true));
+    const q = query(collection(db, "posts"));
+    let arr=[];
+    const querySnapshot = await getDocs(q);
+    querySnapshot.forEach((doc) => {
+        arr.push(`
+            <div class="posts_Here">
+                <div class="Image_Des">
+                    <div class="title">
+                        <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
+                        <div>
+                            <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
+                            <p>${doc.data()?.user?.userEmail}</p>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="post_text">${doc.data()?.text}</p>
+                </div>
+                <img src="${doc.data()?.img}" alt="Some Image">
+            </div>`)
+    });
+    arr=arr.join('')
+    return arr;
 }

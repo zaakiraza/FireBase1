@@ -35,11 +35,10 @@ signUpSubmit.addEventListener("click", function (e) {
     e.preventDefault();
 
     async function uploadImage() {
-        const fileInput = signUpImg.files[0];
+        let fileInput = signUpImg.files[0];
 
         if (!fileInput) {
-            alert("Please select an image first.");
-            return;
+            fileInput = "";
         }
 
         const formData = new FormData();
@@ -47,6 +46,7 @@ signUpSubmit.addEventListener("click", function (e) {
         formData.append('upload_preset', 'fireBase1');
 
         try {
+            loaderImg.style.display = 'flex';
             const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
                 method: 'POST',
                 body: formData

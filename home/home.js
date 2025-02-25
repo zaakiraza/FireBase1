@@ -1,4 +1,4 @@
-import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder } from "../firebase.js";
+import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder, postInDB, showAllPost } from "../firebase.js";
 
 // Get modal and buttons
 const editProfileBtn = document.getElementById("editProfileBtn");
@@ -15,6 +15,14 @@ let editName = document.getElementById('editName');
 let editDes = document.getElementById('editDes');
 let editImg = document.getElementById('editImg');
 let editEmail = document.getElementById('editEmail');
+let logedInUserProfilePost = document.getElementById('logedInUserProfilePost');
+let postText = document.getElementById('postText');
+let postImg = document.getElementById('postImg');
+let postBtn = document.getElementById('postBtn');
+let allPosts = document.getElementById('AllPosts');
+const loaderImg = document.querySelector('.loaderImg');
+let uid;
+let userDetails;
 
 async function starter() {
     uid = await stateObserver();
@@ -24,33 +32,30 @@ async function starter() {
     desUserFeild.innerText = description || "No Description";
     imgUserFeild.src = imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg";
     emailUserFeild.innerText = email;
+    logedInUserProfilePost.src = imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg";
+    let postData = await showAllPost();
+    allPosts.innerHTML = postData;
 }
 starter();
 
-// Open Modal
 editProfileBtn.onclick = async function () {
     modal.style.display = "block";
     let data = await documentShowingOnPlaceholder(uid);
-    let { description, email, imgURL, name } = data;
+    let { description, email, name } = data;
     editName.value = name;
     editEmail.value = email;
     editDes.value = description;
 }
 
-// Close Modal when clicking on "X"
 closeModalBtn.onclick = function () {
     modal.style.display = "none";
 }
 
-// Close Modal if clicking outside of it
 window.onclick = function (event) {
     if (event.target === modal) {
         modal.style.display = "none";
     }
 }
-
-let uid;
-let userDetails;
 
 editBtn.onclick = function (e) {
     e.preventDefault();
@@ -90,4 +95,46 @@ editBtn.onclick = function (e) {
 homelogoutBtn.onclick = function (e) {
     e.preventDefault();
     logout();
+}
+
+postBtn.onclick = () => {
+    async function uploadImage() {
+        const fileInput = postImg.files[0] || "";
+        if (!fileInput) {
+            let { name, email, imgURL } = userDetails;
+            postInDB({
+                text: postText.value,
+                img: "",
+                user: {
+                    userName: name,
+                    userEmail: email,
+                    userProfilePic: imgURL,
+                    uerid: uid
+                }
+            });
+            return;
+        }
+        // if (!fileInput) {
+        //     fileInput = "";
+        // }
+
+        const formData = new FormData();
+        formData.append('file', fileInput);
+        formData.append('upload_preset', 'fireBase1');
+
+        try {
+            const response = await fetch('https://api.cloudinary.com/v1_1/dvo8ftbqu/image/upload', {
+                method: 'POST',
+                body: formData
+            });
+
+            const data = await response.json();
+            let { name, email, imgURL } = userDetails;
+
+        } catch (error) {
+            alert("Post not upload");
+            console.error("Error uploading image:", error);
+        }
+    }
+    uploadImage();
 }
