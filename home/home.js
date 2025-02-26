@@ -22,13 +22,17 @@ let postBtn = document.getElementById('postBtn');
 let allPosts = document.getElementById('AllPosts');
 let loaderImg = document.querySelector('.loaderImg');
 let Allpostsbtn = document.getElementById('Allpostsbtn');
-let yourPostbtn = document.getElementById('yourPostbtn');
+let myPostbtn = document.getElementById('myPostbtn');
+let card_Placeholder = document.getElementById('card_Placeholder');
+let menuBtn;
+let menu_items;
 let uid;
 let userDetails;
 
 async function starter() {
     uid = await stateObserver();
     userDetails = await getSingleData(uid);
+    card_Placeholder.style.display = "none";
     let { name, email, description, imgURL } = userDetails;
     nameUserFeild.innerText = name.toUpperCase();
     desUserFeild.innerText = description || "No Description";
@@ -156,7 +160,24 @@ Allpostsbtn.onclick = async () => {
     allPosts.innerHTML = postData;
 }
 
-yourPostbtn.onclick = async () => {
+myPostbtn.onclick = async () => {
     let postFilterData = await showOnlyPosts(uid);
     allPosts.innerHTML = postFilterData;
+    menuBtn = document.getElementById('menuBtn');
+    menu_items = document.getElementById('menu_items');
+    menuOpen();
+    menuClose();
+}
+
+let menuOpen = () => {
+    menuBtn.addEventListener("click", () => {
+        menu_items.style.display = "block";
+        menuBtn.className="closerMenu";
+    })
+}
+
+let menuClose = () => {
+    document.getElementsByClassName('closerMenu').addEventListener("click", () => {
+        menu_items.style.display = "none";
+    })
 }

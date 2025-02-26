@@ -95,6 +95,16 @@ textarea,
     top: 0;
     left: 0;
     height: 100vh;
+    width: 18rem;
+}
+
+.btns {
+    display: flex;
+    gap: 9px;
+}
+
+.btns a {
+    width: 45%;
 }
 
 .allPosts {
@@ -187,16 +197,44 @@ label i {
     margin: 0 auto;
 }
 
-.title div h3,
-.title div p {
+.title i {
+    font-size: 25px;
+    cursor: pointer;
+    padding-right: 20px;
+}
+
+.content_div h3,
+.content_div p {
     margin: 0;
     padding: 0;
 }
 
-.title div {
+.content_div {
     display: flex;
     flex-direction: column;
     gap: 0;
+    width: 100%;
+}
+
+.menu_items {
+    display: none;
+    position: absolute;
+    background: white;
+    border-radius: 8px;
+    width: 120px;
+    padding: 10px 8px;
+    right: 6%;
+    box-shadow: -1px 3px 4px 2px gray;
+}
+
+.menu_items p {
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-bottom: 5px;
+}
+
+.menu_items p:hover {
+    background: #c2bdbd;
 }
 
 /* Loader img */

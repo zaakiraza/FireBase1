@@ -17,22 +17,43 @@
         <i class="fa-solid fa-spinner"></i>
     </div>
 
-    <div class="card" style="width: 18rem;">
+    <div class="card">
         <img class="card-img-top" id="img"
             src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
             alt="Card image cap">
         <div class="card-body">
             <h5 class="card-title" id="name">Name</h5>
-            <p id="email"></p>
+            <p id="email">E-mail</p>
             <p class="card-text" id="des">Description</p>
             <button id="homelogoutBtn" class="btn btn-primary">LogOut</button>
             <button id="editProfileBtn" class="btn btn-primary">Edit Profile</button>
         </div>
     </div>
 
+    <div class="card card_placeholder" id="card_Placeholder" aria-hidden="true">
+        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+            class="card-img-top placeholder" alt="...">
+        <div class="card-body">
+            <h5 class="card-title placeholder-glow">
+                <span class="placeholder col-6"></span>
+            </h5>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-8"></span>
+            </p>
+            <p class="card-text placeholder-glow">
+                <span class="placeholder col-8"></span>
+            </p>
+            <div class="btns">
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6">LogOut</a>
+                <a href="#" tabindex="-1" class="btn btn-primary disabled placeholder col-6">Edit Profile</a>
+            </div>
+        </div>
+    </div>
+
     <div class="postings">
         <div class="inputPost">
-            <img id="logedInUserProfilePost">
+            <img id="logedInUserProfilePost"
+                src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg">
             <div class="inputsInside">
                 <input type="text" id="postText" placeholder="Thinking for Post">
                 <label for="postImg"><i class="fa-solid fa-upload"></i>Upload Media</label>
@@ -43,10 +64,31 @@
 
         <div class="optionsFilter">
             <button class="btn btn-primary" id="Allpostsbtn">All Posts</button>
-            <button class="btn btn-primary" id="yourPostbtn">Your Post</button>
+            <button class="btn btn-primary" id="myPostbtn">My Posts</button>
         </div>
 
         <div class="allPosts" id="AllPosts">
+            <div class="posts_Here">
+                <div class="Image_Des">
+                    <div class="title">
+                        <img src="https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg"
+                            class="placeholder">
+                        <div class="content_div">
+                            <p class="card-text placeholder-glow">
+                                <span class="placeholder col-6"></span>
+                                <span class="placeholder w-75"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <hr>
+                    <p class="post_text card-text placeholder-glow">
+                        <span class="placeholder col-10"></span>
+                        <span class="placeholder col-8"></span>
+                        <span class="placeholder col-6"></span>
+                    </p>
+                </div>
+                <img src="https://archive.org/download/placeholder-image/placeholder-image.jpg" class="placeholder">
+            </div>
         </div>
     </div>
 

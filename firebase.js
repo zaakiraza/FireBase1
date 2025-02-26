@@ -168,10 +168,15 @@ export async function showOnlyPosts(uid) {
                         <div class="Image_Des">
                             <div class="title">
                                 <img src="${doc.data()?.user?.userProfilePic}" alt="Profile Image">
-                                <div>
+                                <div class="content_div">
                                     <h3 class="Post_title">${doc.data()?.user?.userName}</h3>
                                     <p>${doc.data()?.user?.userEmail}</p>
                                 </div>
+                                <div class="menu_items" id="menu_items">
+                                    <p>Edit Post</p>
+                                    <p>Delete</p>
+                                </div>
+                                <i class="fa-solid fa-ellipsis-vertical" id="menuBtn"></i>
                             </div>
                             <hr>
                             <p class="post_text">${doc.data()?.text}</p>
