@@ -24,8 +24,6 @@ let loaderImg = document.querySelector('.loaderImg');
 let Allpostsbtn = document.getElementById('Allpostsbtn');
 let myPostbtn = document.getElementById('myPostbtn');
 let card_Placeholder = document.getElementById('card_Placeholder');
-let menuBtn;
-let menu_items;
 let uid;
 let userDetails;
 
@@ -139,11 +137,12 @@ postBtn.onclick = () => {
             postInDB({
                 text: postText.value,
                 img: data.secure_url,
+
                 user: {
                     userName: name,
                     userEmail: email,
                     userProfilePic: imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
-                    uerid: uid
+                    userid: uid
                 }
             }, loaderImg);
 
@@ -163,21 +162,26 @@ Allpostsbtn.onclick = async () => {
 myPostbtn.onclick = async () => {
     let postFilterData = await showOnlyPosts(uid);
     allPosts.innerHTML = postFilterData;
-    menuBtn = document.getElementById('menuBtn');
-    menu_items = document.getElementById('menu_items');
-    menuOpen();
-    menuClose();
+    document.body.addEventListener("click", (event) => {
+        event.preventDefault();
+        if (event.target.id.startsWith("edit")) {
+            editPostModalOpen(event.target.id);
+        }
+        else if(event.target.id.startsWith("delete")){
+            deletePostModalOpen(event.target.id);
+        }
+    });
 }
 
-let menuOpen = () => {
-    menuBtn.addEventListener("click", () => {
-        menu_items.style.display = "block";
-        menuBtn.className="closerMenu";
-    })
+function editPostModalOpen(id){
+    console.log(id)
+    document.getElementById('modalPost').style.display="block";
+    
+}
+function deletePostModalOpen(id){
+    console.log(id);
 }
 
-let menuClose = () => {
-    document.getElementsByClassName('closerMenu').addEventListener("click", () => {
-        menu_items.style.display = "none";
-    })
-}
+document.getElementById('closePostModal').addEventListener("click",()=>{
+    document.getElementById('modalPost').style.display="none";
+})

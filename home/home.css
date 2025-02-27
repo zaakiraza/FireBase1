@@ -119,8 +119,8 @@ textarea,
 .posts_Here {
     display: flex;
     flex-direction: column;
-    border: 1px solid black;
     width: 100%;
+    box-shadow: 2px 2px 14px 3px gray;
 }
 
 .Image_Des {
@@ -196,12 +196,13 @@ label i {
 .optionsFilter {
     margin: 0 auto;
 }
-
+/* 
 .title i {
+    position: relative;
     font-size: 25px;
     cursor: pointer;
     padding-right: 20px;
-}
+} */
 
 .content_div h3,
 .content_div p {
@@ -217,13 +218,12 @@ label i {
 }
 
 .menu_items {
-    display: none;
     position: absolute;
     background: white;
     border-radius: 8px;
     width: 120px;
     padding: 10px 8px;
-    right: 6%;
+    right: 10px;
     box-shadow: -1px 3px 4px 2px gray;
 }
 

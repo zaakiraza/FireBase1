@@ -92,8 +92,7 @@
         </div>
     </div>
 
-
-    <!-- The Modal -->
+    <!-- The Modals -->
     <div id="editProfileUpModal" class="modal">
         <div class="modal-content">
             <span class="close-btn">&times;</span>
@@ -105,6 +104,19 @@
                 <input id="editImg" type="file" required hidden>
                 <textarea id="editDes" cols="47" rows="5">About yourself</textarea>
                 <button id="editBtn" class="btn btn-primary">Save Changes</button>
+            </form>
+        </div>
+    </div>
+
+    <div class="modal" id="modalPost">
+        <div class="modal-content modalPostContent">
+            <span class="close-btn" id="closePostModal">&times;</span>
+            <h2>Edit Post</h2>
+            <form id="PostEditForm">
+                <input id="postEditText" type="text" placeholder="change Text">
+                <img id="postEditImg" src="" alt="">
+                <input type="file" id="postEditImg">
+                <button id="postEditBtn" class="btn btn-primary">Save Changes</button>
             </form>
         </div>
     </div>
