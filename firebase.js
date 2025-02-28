@@ -1,6 +1,6 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-app.js";
 import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, onAuthStateChanged, signOut } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-auth.js";
-import { getFirestore, collection, doc, setDoc, getDoc, addDoc, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
+import { getFirestore, collection, doc, setDoc, getDoc, addDoc, query, where, getDocs, deleteDoc } from "https://www.gstatic.com/firebasejs/11.3.0/firebase-firestore.js";
 
 const firebaseConfig = {
     apiKey: "AIzaSyCU_BU_2LaL4NuaF5u6qrKiu5wFN66BVik",
@@ -162,7 +162,7 @@ export async function showOnlyPosts(uid) {
     let arr = [];
     const querySnapshot = await getDocs(q);
     querySnapshot.forEach((doc) => {
-        if (doc.data()?.user?.uerid == uid) {
+        if (doc.data()?.user?.userid == uid) {
             if (doc.data()?.img) {
                 arr.push(`
                     <div class="posts_Here">
@@ -174,8 +174,8 @@ export async function showOnlyPosts(uid) {
                                     <p>${doc.data()?.user?.userEmail}</p>
                                 </div>
                                 <div class="menu_items" id="menu_items">
-                                    <p id="edit${doc.id}">Edit Post</p>
-                                    <p id="delete${doc.id}">Delete</p>
+                                    <p id="edit-${doc.id}">Edit Post</p>
+                                    <p id="delete-${doc.id}">Delete</p>
                                 </div>
                             </div>
                             <hr>
@@ -195,8 +195,8 @@ export async function showOnlyPosts(uid) {
                                     <p>${doc.data()?.user?.userEmail}</p>
                                 </div>
                                 <div class="menu_items" id="menu_items">
-                                    <p id=edit${doc.id}>Edit Post</p>
-                                    <p id=delete${doc.id}>Delete</p>
+                                    <p id=edit-${doc.id}>Edit Post</p>
+                                    <p id=delete-${doc.id}>Delete</p>
                                 </div>
                             </div>
                             <hr>
@@ -208,4 +208,27 @@ export async function showOnlyPosts(uid) {
     });
     arr = arr.join('')
     return arr;
+}
+
+export async function editPostSingleDocument(id) {
+    const docRef = doc(db, "posts", id);
+    const docSnap = await getDoc(docRef);
+
+    if (docSnap.exists()) {
+        return docSnap.data();
+    } else {
+        console.log("No such document!");
+    }
+}
+
+export async function deletePost(uid) {
+    let ans = confirm("Are Your You Want To Delete The Post");
+    console.log(ans)
+    if (ans) {
+        await deleteDoc(doc(db, "posts", uid));
+        window.location.reload();
+    }
+    else {
+        window.location.reload();
+    }
 }

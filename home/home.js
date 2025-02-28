@@ -1,4 +1,4 @@
-import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder, postInDB, showAllPost, showOnlyPosts } from "../firebase.js";
+import { editDetails, getSingleData, stateObserver, logout, documentShowingOnPlaceholder, postInDB, showAllPost, showOnlyPosts, editPostSingleDocument, deletePost } from "../firebase.js";
 
 // Get modal and buttons
 const editProfileBtn = document.getElementById("editProfileBtn");
@@ -24,6 +24,10 @@ let loaderImg = document.querySelector('.loaderImg');
 let Allpostsbtn = document.getElementById('Allpostsbtn');
 let myPostbtn = document.getElementById('myPostbtn');
 let card_Placeholder = document.getElementById('card_Placeholder');
+let postEditText = document.getElementById('postEditText');
+let postEditImgPreview = document.getElementById('postEditImgPreview');
+let postEditImg = document.getElementById('postEditImg');
+let postEditBtn = document.getElementById('postEditBtn');
 let uid;
 let userDetails;
 
@@ -116,7 +120,7 @@ postBtn.onclick = () => {
                     userName: name,
                     userEmail: email,
                     userProfilePic: imgURL || "https://static.vecteezy.com/system/resources/thumbnails/003/337/584/small/default-avatar-photo-placeholder-profile-icon-vector.jpg",
-                    uerid: uid
+                    userid: uid
                 }
             }, loaderImg);
             return;
@@ -161,27 +165,39 @@ Allpostsbtn.onclick = async () => {
 
 myPostbtn.onclick = async () => {
     let postFilterData = await showOnlyPosts(uid);
+    if(!postFilterData){
+        allPosts.innerHTML = "<main>No Posts Available</main>";
+        return;    
+    }
     allPosts.innerHTML = postFilterData;
     document.body.addEventListener("click", (event) => {
         event.preventDefault();
+
         if (event.target.id.startsWith("edit")) {
             editPostModalOpen(event.target.id);
         }
-        else if(event.target.id.startsWith("delete")){
+        else if (event.target.id.startsWith("delete")) {
             deletePostModalOpen(event.target.id);
         }
     });
 }
 
-function editPostModalOpen(id){
-    console.log(id)
-    document.getElementById('modalPost').style.display="block";
-    
-}
-function deletePostModalOpen(id){
-    console.log(id);
+async function editPostModalOpen(id) {
+    let data = await editPostSingleDocument(id.split("-")[1]);
+    postEditText.value = data.text;
+    if (data?.img) {
+        postEditImgPreview.src = data?.img;
+    }
+    else {
+        postEditImgPreview.src = "";
+    }
+    document.getElementById('modalPost').style.display = "block";
 }
 
-document.getElementById('closePostModal').addEventListener("click",()=>{
-    document.getElementById('modalPost').style.display="none";
+function deletePostModalOpen(id) {
+    deletePost(id.split("-")[1]);
+}
+
+document.getElementById('closePostModal').addEventListener("click", () => {
+    document.getElementById('modalPost').style.display = "none";
 })
